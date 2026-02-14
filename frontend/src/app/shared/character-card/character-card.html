@@ -1,0 +1,69 @@
+<div class="row gonk-row align-items-center mb-2 mt-2 p-2 border border-warning rounded" [class.active-turn]="isActive">
+
+  <div class="col-auto">
+    <img src="assets/samurai-icon.png" class="portrait" />
+  </div>
+
+  <div class="col">
+    <p class="mb-0 fw-bold">Name: {{ character.name || 'Gonk' }}</p>
+  </div>
+
+  <div class="col">
+    <p class="mb-0">
+      HP: {{ character.health ?? '—' }}<br>
+      Armor: {{ character.armor ?? '—' }}<br>
+      Initiative: {{ character.initiative ?? '—' }}
+    </p>
+  </div>
+
+  <div class="col">
+    <!--<input type="number" class="form-control form-control-sm mb-2" [(ngModel)]="inputValue" placeholder="Value" /> -->
+    <input
+    type="number"
+    class="form-control form-control-sm mb-2"
+    [ngModel]="inputValue"
+    (ngModelChange)="onInputChange($event)"
+    placeholder="Value"
+    />
+
+
+    <div class="d-flex flex-wrap gap-2">
+      <button class="button-57 flex-fill" (click)="rangedAttack.emit(character)">
+        <span class="text">Ranged Attack</span><span>Apply Damage</span>
+      </button>
+
+      <button class="button-57 flex-fill" (click)="meleeAttack.emit(character)">
+        <span class="text">Melee Attack</span><span>Apply Damage</span>
+      </button>
+
+      <button class="button-57 flex-fill" (click)="setHealth.emit(character)">
+        <span class="text">Set Health</span><span>Apply Health</span>
+      </button>
+
+      <button class="button-57 flex-fill" (click)="changeName.emit(character)">
+        <span class="text">Change Name</span><span>Apply Name</span>
+      </button>
+
+      <button class="button-57 flex-fill" (click)="changeArmor.emit(character)">
+        <span class="text">Change Armor</span><span>Apply Armor</span>
+      </button>
+
+      <button class="button-57 flex-fill" (click)="changeInit.emit(character)">
+        <span class="text">Change Initiative</span><span>Apply Initiative</span>
+      </button>
+    </div>
+  </div>
+
+    <!--
+    @if(isActive){
+    <div class="col-auto" *ngIf="isActive">
+        <div class="arrow"><span></span><span></span><span></span></div>
+    </div>
+    }
+    -->
+
+  <div class="col-auto">
+    <button class="delButton" (click)="delete.emit(character)">X</button>
+  </div>
+
+</div>

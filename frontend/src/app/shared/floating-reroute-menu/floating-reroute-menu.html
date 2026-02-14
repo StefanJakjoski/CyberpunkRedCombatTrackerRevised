@@ -1,0 +1,23 @@
+@if(loggedIn$ | async){
+    <div class="floating-user">
+
+  <!-- Icon -->
+  <div class="user-icon">
+    <i class="bi bi-collection-fill"></i>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="user-menu">
+
+      <button (click)="toDashboard()" class="menu-item">
+        Dashboard
+      </button>
+
+      <button class="menu-item" (click)="toTracker()">
+        Tracker
+      </button>
+
+  </div>
+
+</div>
+}

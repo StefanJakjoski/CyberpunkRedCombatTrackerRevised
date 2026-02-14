@@ -1,0 +1,82 @@
+/* Full screen wrapper */
+.dashboard-wrapper {
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional background image support */
+.dashboard-wrapper.with-bg {
+  background-image: url('/assets/alley-dashboard-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Optional dark overlay when bg is used */
+.dashboard-wrapper.with-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 0;
+}
+
+.dashboard-wrapper > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom Theme Colors */
+.text-crimson {
+  color: #a10000;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+/* Crimson Button */
+.btn-crimson {
+  background-color: #8b0000;
+  border-color: #8b0000;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-crimson:hover {
+  background-color: #b30000;
+  border-color: #b30000;
+  transform: translateY(-2px);
+}
+
+/* Crimson Outline */
+.btn-outline-crimson {
+  color: #ff3c3c;
+  border-color: #8b0000;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-crimson:hover {
+  background-color: #8b0000;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Subtle fade-in animation */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

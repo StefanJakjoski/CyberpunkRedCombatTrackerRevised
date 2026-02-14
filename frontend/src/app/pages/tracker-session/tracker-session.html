@@ -1,0 +1,144 @@
+<div 
+  class="background-wrapper text-light"
+  [class.with-bg]="useBackgroundImage"
+>
+
+
+  <div class="container-fluid mt-4">
+    <div class="row g-4">
+
+      <!-- MAIN CONTENT -->
+      <div class="col-lg-9">
+        <h2>Session {{ sessionId }}</h2>
+        <div id="gonkDiv" class="border border-warning rounded p-3">
+          <!-- Gonk rows rendered here -->
+          @for (character of characters; track character._id) {
+          <app-character-card
+              [character]="character"
+              [isActive]="isTurn(character)"
+              [(inputValue)]="inputValues[character._id!]"
+              (rangedAttack)="rangedAttack($event)"
+              (meleeAttack)="meleeAttack($event)"
+              (setHealth)="setHealth($event)"
+              (changeName)="changeName($event)"
+              (changeArmor)="changeArmor($event)"
+              (changeInit)="changeInit($event)"
+              (delete)="deleteCharacter($event)"
+          ></app-character-card>
+
+          }
+        </div>
+      </div>
+
+      <!-- SIDE PANEL -->
+      <div class="col-lg-3">
+        <div class="floating-sidebar">
+        <div class="d-grid gap-3">
+
+
+          <!-- Turn Controls -->
+          <div class="card bg-dark border-warning text-warning p-2">
+            <div class="row g-0 mb-2">
+              <button
+                class="btn btn-dark border-secondary"
+                id="passTurn"
+                (click)="nextTurn()"
+              >
+                Next Turn
+              </button>
+            </div>
+
+            <div class="row g-0 mb-2">
+              <button
+                class="btn btn-dark border-secondary"
+                id="prevTurn"
+                (click)="previousTurn()"
+              >
+                Previous Turn
+              </button>
+            </div>
+
+              <!-- Generate -->
+            <div class="row g-0">
+              <button
+                class="btn btn-dark border-warning"
+                id="genEncounter" (click)="generateRandomGonk()"
+              >
+                Generate Random Gonk
+              </button>
+            </div>
+          </div>
+
+          <!-- Add Gonk -->
+          <div class="card bg-dark border-warning text-warning">
+            <div class="card-body p-2">
+
+              <div class="row g-1 mb-2">
+                <div class="col-12">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm bg-dark text-warning border-secondary"
+                    placeholder="Name"
+                    [(ngModel)]="newCharacterName"
+                    name="name"
+                  />
+                  <label class="text-warning">Name</label>
+                </div>
+
+                <div class="col-4">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm bg-dark text-warning border-secondary"
+                    placeholder="HP"
+                    [(ngModel)]="newCharacterHealth"
+                    name="health"
+                  />
+                  <label class="text-warning">Health</label>
+                </div>
+
+                <div class="col-4">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm bg-dark text-warning border-secondary"
+                    placeholder="AC"
+                    [(ngModel)]="newCharacterArmor"
+                    name="armor"
+                  />
+                  <label class="text-warning">Armor</label>
+                </div>
+
+                <div class="col-4">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm bg-dark text-warning border-secondary"
+                    placeholder="Init"
+                    [(ngModel)]="newCharacterInit"
+                    name="init"
+                  />
+                  <label class="text-warning">Initiative</label>
+                </div>
+
+                <div class="col-12 small">
+                  *Leave empty for random values.
+                </div>
+              </div>
+
+              <button
+                class="btn btn-outline-warning btn-sm w-100"
+                (click)="generateGonk()"
+              >
+                Add Gonk
+              </button>
+
+            </div>
+          </div>
+
+
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

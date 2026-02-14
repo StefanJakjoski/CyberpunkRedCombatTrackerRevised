@@ -1,0 +1,56 @@
+<div 
+  class="dashboard-wrapper d-flex align-items-center justify-content-center text-light"
+  [class.with-bg]="useBackgroundImage"
+>
+
+  <div class="container text-center py-5">
+
+    <!-- LOGGED OUT -->
+    @if(!(loggedIn$ | async)){
+      
+      <h1 class="display-4 fw-bold text-crimson mb-3">
+        Gonk Tracker
+      </h1>
+
+      <p class="lead text-warning mb-4">
+        Control the chaos. Track your sessions. Dominate initiative.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a (click)="toLogin()" class="btn btn-crimson btn-lg px-4">
+          Login
+        </a>
+
+        <a (click)="toRegister()" class="btn btn-outline-warning btn-lg px-4">
+          Create Account
+        </a>
+      </div>
+    } 
+    @if(loggedIn$ | async){
+    <!-- LOGGED IN -->
+      <div class="fade-in">
+
+        <h1 class="display-5 fw-bold text-warning mb-3">
+          Welcome Back, Operator
+        </h1>
+
+        <p class="lead text-crimson mb-4">
+          Your sessions await.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <button (click)="toTracker()" class="btn btn-warning btn-lg px-4 text-dark fw-bold">
+            Open Tracker
+          </button>
+
+          <button (click)="toSessions()" class="btn btn-outline-crimson btn-lg px-4">
+            View Sessions
+          </button>
+        </div>
+
+      </div>
+    }
+
+  </div>
+
+</div>

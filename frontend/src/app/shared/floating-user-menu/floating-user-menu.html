@@ -1,0 +1,33 @@
+<div class="floating-user">
+
+  <!-- Icon -->
+  <div class="user-icon">
+    <i class="bi bi-person-fill"></i>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="user-menu">
+
+    @if(loggedIn$ | async){
+      <button (click)="toProfile()" class="menu-item">
+        View Profile
+      </button>
+
+      <button class="menu-item text-warning" (click)="logout()">
+        Log Out
+      </button>
+    }@else{
+
+      <button (click)="toLogin()" class="menu-item">
+        Log In
+      </button>
+
+      <button (click)="toRegister()" class="menu-item text-warning">
+        Register
+      </button>
+
+    }
+
+  </div>
+
+</div>
