@@ -72,8 +72,10 @@
           <!-- Add Gonk -->
           <div class="card bg-dark border-warning text-warning">
             <div class="card-body p-2">
+              <div class="row g-0 mb-2 text-warning fw-bold">Create new gonk</div>
 
               <div class="row g-1 mb-2">
+                <label class="text-warning">Name</label>
                 <div class="col-12">
                   <input
                     type="text"
@@ -82,10 +84,10 @@
                     [(ngModel)]="newCharacterName"
                     name="name"
                   />
-                  <label class="text-warning">Name</label>
                 </div>
 
                 <div class="col-4">
+                  <label class="text-warning">Health</label>
                   <input
                     type="number"
                     class="form-control form-control-sm bg-dark text-warning border-secondary"
@@ -93,10 +95,10 @@
                     [(ngModel)]="newCharacterHealth"
                     name="health"
                   />
-                  <label class="text-warning">Health</label>
                 </div>
 
                 <div class="col-4">
+                  <label class="text-warning">Armor</label>
                   <input
                     type="number"
                     class="form-control form-control-sm bg-dark text-warning border-secondary"
@@ -104,10 +106,10 @@
                     [(ngModel)]="newCharacterArmor"
                     name="armor"
                   />
-                  <label class="text-warning">Armor</label>
                 </div>
 
                 <div class="col-4">
+                  <label class="text-warning">Initiative</label>
                   <input
                     type="number"
                     class="form-control form-control-sm bg-dark text-warning border-secondary"
@@ -115,7 +117,6 @@
                     [(ngModel)]="newCharacterInit"
                     name="init"
                   />
-                  <label class="text-warning">Initiative</label>
                 </div>
 
                 <div class="col-12 small">
