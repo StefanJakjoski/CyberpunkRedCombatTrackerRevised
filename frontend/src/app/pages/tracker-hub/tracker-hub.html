@@ -1,110 +1,134 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
+<div 
+  class="background-wrapper text-light"
+  [class.with-bg]="useBackgroundImage"
+>
 
-      <h2 class="text-center mb-4">Session Hub</h2>
+  <div class="container py-5">
 
-      <div class="row g-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
 
-        <!-- Join Active Session -->
-        <div class="col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Join Active Session</h5>
+        <h2 class="text-center mb-5 text-warning fw-bold">
+          SESSION HUB
+        </h2>
 
-              <input
-                type="text"
-                class="form-control mb-3"
-                placeholder="Enter Session ID"
-                [(ngModel)]="joinSessionId"
-              />
+        <div class="row g-4">
 
-              <button
-                class="btn btn-primary w-100"
-                (click)="joinSession()"
-                [disabled]="isLoading"
-              >
-                Join Session
-              </button>
+          <!-- Join Active Session -->
+          <div class="col-md-6">
+            <div class="card hub-card h-100">
+              <div class="card-body">
+
+                <h5 class="card-title text-danger">
+                  Join Active Session
+                </h5>
+
+                <input
+                  type="text"
+                  class="form-control themed-input mb-3"
+                  placeholder="Enter Session ID"
+                  [(ngModel)]="joinSessionId"
+                />
+
+                <button
+                  class="btn btn-outline-warning w-100"
+                  (click)="joinSession()"
+                  [disabled]="isLoading"
+                >
+                  Join Session
+                </button>
+
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Create New Session -->
-        <div class="col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Create New Session</h5>
-              <p class="text-muted">
-                Start a new encounter and become its owner.
-              </p>
+          <!-- Create New Session -->
+          <div class="col-md-6">
+            <div class="card hub-card h-100">
+              <div class="card-body">
 
-              <button
-                class="btn btn-success w-100"
-                (click)="createSession()"
-                [disabled]="isLoading"
-              >
-                Create Session
-              </button>
+                <h5 class="card-title text-danger">
+                  Create New Session
+                </h5>
+
+                <p class="text-secondary small">
+                  Start a new encounter.
+                </p>
+
+                <button
+                  class="btn btn-danger w-100 border-warning"
+                  (click)="createSession()"
+                  [disabled]="isLoading"
+                >
+                  Create Session
+                </button>
+
+              </div>
             </div>
           </div>
+
         </div>
 
-      </div>
+        <div *ngIf="error" class="alert alert-danger mt-4 text-center">
+          {{ error }}
+        </div>
 
-      <div *ngIf="error" class="alert alert-danger mt-4">
-        {{ error }}
-      </div>
+        <!-- Sessions List -->
+        <div class="mt-5">
 
-    </div>
-  </div>
-</div>
+          <h4 class="mb-4 text-warning">Your Sessions</h4>
 
+          <!-- Loading -->
+          <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-warning"></div>
+          </div>
 
-<div class="container mt-5">
+          <!-- Empty -->
+          <div *ngIf="!isLoading && allSessions.length === 0"
+               class="text-secondary">
+            No sessions found.
+          </div>
 
-  <h4 class="mb-3">Your Sessions</h4>
+          <!-- Cards -->
+          <div class="row g-4"
+               *ngIf="!isLoading && allSessions.length > 0">
 
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="text-center py-5">
-    <div class="spinner-border" role="status"></div>
-  </div>
+            <div
+              class="col-12 col-md-6"
+              *ngFor="let session of allSessions"
+            >
+              <div
+                class="card session-card hub-card h-100"
+                (click)="goToSession(session._id)"
+                role="button"
+              >
+                <div class="card-body d-flex flex-column">
 
-  <!-- Empty State -->
-  <div *ngIf="!isLoading && allSessions.length === 0" class="text-muted">
-    No sessions found.
-  </div>
+                  <h5 class="card-title text-warning">
+                    {{ session.name || 'Encounter' }}
+                  </h5>
 
-  <!-- Session Cards -->
-  <div class="row g-4" *ngIf="!isLoading && allSessions.length > 0">
+                  <p class="small text-secondary mb-2">
+                    Session ID:
+                    <span class="font-monospace text-danger">
+                      {{ session._id }}
+                    </span>
+                  </p>
 
-    <div
-      class="col-12 col-md-6"
-      *ngFor="let session of allSessions"
-    >
-      <div
-        class="card h-100 shadow-sm session-card"
-        (click)="goToSession(session._id)"
-        role="button"
-      >
-        <div class="card-body d-flex flex-column">
+                  <div class="mt-auto">
+                    <small class="text-secondary">
+                      Created {{ session.createdAt | date:'mediumDate' }}
+                    </small>
+                  </div>
 
-          <h5 class="card-title">
-            {{ session.name || 'Encounter' }}
-          </h5>
+                </div>
+              </div>
+            </div>
 
-          <p class="text-muted small mb-2">
-            Session ID:
-            <span class="font-monospace">{{ session._id }}</span>
-          </p>
-
-          <div class="mt-auto">
-            <small class="text-muted">
-              Created {{ session.createdAt | date:'mediumDate' }}
-            </small>
           </div>
 
         </div>
+
       </div>
     </div>
 

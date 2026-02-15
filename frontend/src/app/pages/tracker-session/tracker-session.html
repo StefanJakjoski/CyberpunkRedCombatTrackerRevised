@@ -10,7 +10,7 @@
       <!-- MAIN CONTENT -->
       <div class="col-lg-9">
         <h2>Session {{ sessionId }}</h2>
-        <div id="gonkDiv" class="border border-warning rounded p-3">
+        <div id="gonkDiv" class="border border-warning rounded p-3 card-wrapper">
           <!-- Gonk rows rendered here -->
           @for (character of characters; track character._id) {
           <app-character-card

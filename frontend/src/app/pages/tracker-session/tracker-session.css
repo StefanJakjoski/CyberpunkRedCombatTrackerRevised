@@ -1,4 +1,7 @@
 /* ------------------- Character Row ------------------- */
+.card-wrapper {
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
 /* ------------------- Full screen wrapper ------------------- */
 .background-wrapper {
@@ -15,7 +18,7 @@
 
 .background-wrapper.with-bg {
   /*background-image: url('/assets/alley-dashboard-background.jpg');*/
-  background-image: url('/assets/background1.jpg');
+  background-image: url('/assets/background2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -26,7 +29,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
 

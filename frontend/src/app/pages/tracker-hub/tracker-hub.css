@@ -1,8 +1,86 @@
-.session-card {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+/* ------------------- Full screen wrapper ------------------- */
+.background-wrapper {
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  position: relative;
+  overflow: hidden;
+
+  /* Fixed background */
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
-.session-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+.background-wrapper.with-bg {
+  /*background-image: url('/assets/alley-dashboard-background.jpg');*/
+  background-image: url('/assets/background1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Dark overlay */
+.background-wrapper.with-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+/* Ensure content is above overlay */
+.background-wrapper > .container {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ------------------- Hub Cards ------------------- */
+.hub-card {
+  background-color: #121212;
+  border: 2px solid #ffc107;
+  color: #f8f9fa;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(220, 53, 69, 0.4);
+  border-color: #dc3545;
+}
+
+/* Session cards specifically */
+.session-card {
+  cursor: pointer;
+}
+
+/* ------------------- Inputs ------------------- */
+.themed-input {
+  background-color: #0d0d0d;
+  color: #ffc107;
+  border: 1px solid #dc3545;
+}
+
+.themed-input:focus {
+  background-color: #0d0d0d;
+  color: #ffc107;
+  border-color: #ffc107;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+/* ------------------- Buttons ------------------- */
+.btn-danger {
+  background-color: #8b0000;
+  border-color: #ffc107;
+}
+
+.btn-danger:hover {
+  background-color: #dc3545;
+  border-color: #ffc107;
+}
+
+/* Spinner override */
+.spinner-border {
+  border-width: 0.25rem;
 }

@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './tracker-hub.css',
 })
 export class TrackerHub implements OnInit{
+
+  useBackgroundImage: boolean = true;
+
   joinSessionId = '';
   isLoading = false;
   error = '';
