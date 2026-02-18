@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.css',
 })
 export class Login {
+  useBackgroundImage: boolean = true;
+
   email: string = '';
   password: string = '';
   loading: boolean = false;

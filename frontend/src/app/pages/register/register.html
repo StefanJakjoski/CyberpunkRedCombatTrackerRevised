@@ -1,38 +1,52 @@
-<div class="container min-vh-100 d-flex align-items-center">
-    <div class="mx-auto bg-body-tertiary text-body rounded-4 p-4 shadow" style="max-width: 420px;">
-        <h1 class="text-center mb-4">Register</h1>
+<div 
+  class="dashboard-wrapper d-flex align-items-center justify-content-center text-light"
+  [class.with-bg]="useBackgroundImage"
+>
+    <div class="container min-vh-100 d-flex align-items-center">
+        <div class="mx-auto main-container rounded-4 p-4 shadow" style="max-width: 420px;">
+            <h1 class="text-center mb-4 text-crimson" style="font-family: Sdglitch;">Register</h1>
 
-        <form #registerForm="ngForm" class="bg-body-tertiary text-body rounded-4 p-4 shadow" (ngSubmit)="onRegister()">
-          <!-- Email -->
-          <div class="form-floating mb-3">
-              <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="" required/>
-              <label for="email">Email address</label>
-          </div>
+            <form #registerForm="ngForm" class="text-body rounded-2 p-4" (ngSubmit)="onRegister()">
+            <!-- Email -->
+            <div class="form-floating mb-3">
+                <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="" required/>
+                <label for="email">Email address</label>
+            </div>
 
-          <!-- First name -->
-          <div class="form-floating mb-3">
-              <input [(ngModel)]="name" name="name" type="name" class="form-control" id="name" placeholder="" required/>
-              <label for="email">Display name</label>
-          </div>
+            <!-- First name -->
+            <div class="form-floating mb-3">
+                <input [(ngModel)]="name" name="name" type="name" class="form-control" id="name" placeholder="" required/>
+                <label for="email">Display name</label>
+            </div>
 
-          <!-- Password -->
-          <div class="form-floating mb-4">
-              <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" placeholder="" required/>
-              <label for="password">Password</label>
-          </div>
+            <!-- Password -->
+            <div class="form-floating mb-4">
+                <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" placeholder="" required/>
+                <label for="password">Password</label>
+            </div>
 
-          <!-- Confirm password -->
-          <div class="form-floating mb-4">
-              <input [(ngModel)]="passwordC" name="passwordC" type="password" class="form-control" id="password" placeholder="" required/>
-              <label for="password">Confirm password</label>
-          </div>
+            <!-- Confirm password -->
+            <div class="form-floating mb-4">
+                <input [(ngModel)]="passwordC" name="passwordC" type="password" class="form-control" id="password" placeholder="" required/>
+                <label for="password">Confirm password</label>
+            </div>
 
-          <!-- Submit -->
-          <button type="submit" [disabled]="registerForm.invalid || loading" class="btn btn-outline-primary btn-sm">
-            Register
-          </button>         
-        </form>
-        <br *ngIf="error"/>
-        <p *ngIf="error" style="color:red;">{{ error }}</p>   <!-- Display error message if register fails (ngIf)-->
+            <!-- Submit -->
+            <button type="submit" [disabled]="registerForm.invalid || loading" class="btn btn-crimson btn-md">
+                Register
+            </button>         
+            </form>
+            <br *ngIf="error"/>
+            <p *ngIf="error" style="color:red;">{{ error }}</p>   <!-- Display error message if register fails (ngIf)-->
+            
+            <!-- Login -->
+            <br/>
+            <div class="text-warning">
+                Already a member?
+                <!-- <a href="/docs/views/register.html">Register</a> -->
+                <button (click)="toLogin()" type="submit" [disabled]="loading" class="buttonAlt">Login</button>
+            </div>
+        </div>
     </div>
+
 </div>

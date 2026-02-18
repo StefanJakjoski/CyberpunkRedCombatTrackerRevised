@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* FONTS */
+
+@font-face {
+  font-family: 'Qubegenix';
+  src: url(./assets/fonts/Qubegenix-G3Y1O.ttf);
+}
+@font-face {
+  font-family: 'Sdglitch';
+  src: url(./assets/fonts/Sdglitchrobotdemo-GOPdO.ttf);
+}

@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './register.css',
 })
 export class Register {
+  useBackgroundImage: boolean = true;
+
   name: string = '';
   email: string = '';
   password: string = '';
@@ -41,5 +43,9 @@ export class Register {
       },
       complete: () => { this.loading = false; }
     });
+  }
+
+  toLogin(){
+    this.router.navigate(['/login']);
   }
 }

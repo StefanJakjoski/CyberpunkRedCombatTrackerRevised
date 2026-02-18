@@ -8,13 +8,15 @@
     <!-- LOGGED OUT -->
     @if(!(loggedIn$ | async)){
       
-      <h1 class="display-4 fw-bold text-crimson mb-3">
-        Gonk Tracker
+      <h1 class="display-4 fw-bold text-crimson mb-3" style="font-family: Sdglitch;">
+        Cyberpunk RED Combat Tracker
       </h1>
 
-      <p class="lead text-warning mb-4">
-        Control the chaos. Track your sessions. Dominate initiative.
-      </p>
+      <div class="container align-items-center justify-content-center d-flex text-center">
+        <p class="lead text-crimson mb-4 glow rounded-2" >
+          Gonna need to see some IDs.
+        </p>
+      </div>
 
       <div class="d-flex justify-content-center gap-3 flex-wrap">
         <a (click)="toLogin()" class="btn btn-crimson btn-lg px-4">
@@ -28,15 +30,17 @@
     } 
     @if(loggedIn$ | async){
     <!-- LOGGED IN -->
-      <div class="fade-in">
+      <div class="fade-in text-center">
 
-        <h1 class="display-5 fw-bold text-warning mb-3">
+        <h1 class="display-5 fw-bold text-warning mb-3" style="font-family: Sdglitch;">
           Wake Up, Choom
         </h1>
 
-        <p class="lead text-crimson mb-4">
-          We got a city to burn.
-        </p>
+        <div class="container align-items-center justify-content-center d-flex text-center">
+          <p class="lead text-crimson mb-4 glow rounded-2">
+            We got a city to burn.
+          </p>
+        </div>
 
         <div class="d-flex justify-content-center gap-3 flex-wrap">
           <button (click)="toTracker()" class="btn btn-warning btn-lg px-4 text-dark fw-bold">
