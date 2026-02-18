@@ -150,3 +150,11 @@
   box-shadow: 0 0 30px violet;
   background-color: rgba(238, 130, 238, 0.3) !important;
 }
+
+/* ------------------- Weapon Name ------------------- */
+.input-transparent {
+  background-color: transparent;
+  width: fit-content !important;
+  outline: none;
+  border: none;
+}

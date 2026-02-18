@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class CharacterCard {
 
   @Input() character!: Character;
+  @Input() weaponName: string = 'Sheer Moxie'
   @Input() isActive = false;
   @Input() inputValue?: number;
   @Output() inputValueChange = new EventEmitter<number>();
@@ -23,6 +24,7 @@ export class CharacterCard {
   @Output() changeArmor = new EventEmitter<Character>();
   @Output() changeInit = new EventEmitter<Character>();
   @Output() delete = new EventEmitter<Character>();
+  @Output() saveWeapon = new EventEmitter<Character>();
 
   // emit changes whenever input changes
   onInputChange(value: number) {

@@ -5,7 +5,7 @@
   </div>
 
   <div class="col">
-    <p class="mb-0 fw-bold">Name: {{ character.name || 'Gonk' }}</p>
+    <p class="mb-0 fw-bold">{{ character.name || 'Gonk' }}</p>
   </div>
 
   <div class="col">
@@ -15,6 +15,30 @@
       Initiative: {{ character.initiative ?? '—' }}
     </p>
   </div>
+
+  <!-- UNCOMMENT FOR WEAPON CASES
+  <div class="col">
+    <input
+      type="text"
+      class="input-transparent text-light max-vh-10 f-gothic" 
+      placeholder="Strong language"
+      [(ngModel)]="weaponName"
+      (blur)="saveWeapon.emit(character)"
+      (submit)="saveWeapon.emit(character)"
+      name="name"
+    />
+
+    <input
+      type="text"
+      class="input-transparent text-light max-vh-10 f-gothic" 
+      placeholder="Just emotional"
+      [(ngModel)]="weaponName"
+      (blur)="saveWeapon.emit(character)"
+      (submit)="saveWeapon.emit(character)"
+      name="name"
+    />
+  </div>
+  -->
 
   <div class="col">
     <!--<input type="number" class="form-control form-control-sm mb-2" [(ngModel)]="inputValue" placeholder="Value" /> -->

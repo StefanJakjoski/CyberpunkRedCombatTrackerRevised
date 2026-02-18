@@ -3,18 +3,18 @@
   [class.with-bg]="useBackgroundImage"
 >
 
-  <div class="container text-center py-5">
+  <div class="container text-center py-5 f-gothic">
 
     <!-- LOGGED OUT -->
     @if(!(loggedIn$ | async)){
       
-      <h1 class="display-4 fw-bold text-crimson mb-3" style="font-family: Sdglitch;">
+      <h1 class="display-4 fw-bold text-warning mb-3" style="font-family: Sdglitch;">
         Cyberpunk RED Combat Tracker
       </h1>
 
-      <div class="container align-items-center justify-content-center d-flex text-center">
-        <p class="lead text-crimson mb-4 glow rounded-2" >
-          Gonna need to see some IDs.
+      <div class="container align-items-center justify-content-center d-flex text-center mb-5">
+        <p class="lead text-crimson mb-4 glow px-4 rounded-2 fw-bold" style="font-family: 'Century Gothic Bold'; color: #881a9a;">
+          Welcome to the Underground.
         </p>
       </div>
 
@@ -36,8 +36,8 @@
           Wake Up, Choom
         </h1>
 
-        <div class="container align-items-center justify-content-center d-flex text-center">
-          <p class="lead text-crimson mb-4 glow rounded-2">
+        <div class="container align-items-center justify-content-center d-flex text-center mb-5">
+          <p class="lead text-crimson mb-4 glow rounded-2 px-4 fw-bold" style="color: #881a9a;">
             We got a city to burn.
           </p>
         </div>

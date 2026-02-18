@@ -4,12 +4,24 @@
 >
 
 
-  <div class="container-fluid mt-4">
+  <div class="container-fluid mt-4 f-gothic">
     <div class="row g-4">
 
       <!-- MAIN CONTENT -->
       <div class="col-lg-9">
-        <h2>Session {{ sessionId }}</h2>
+        <!-- <h2 class="display-4 fw-bold text-warning mb-3" style="font-family: Sdglitch;">{{ sessionName }}</h2> -->
+        <input
+          type="text"
+          class="display-4 fw-bold text-warning mb-3 header-styling" 
+          style="font-family: Sdglitch;"
+          placeholder=""
+          [(ngModel)]="sessionName"
+          (blur)="onTitleDefocus()"
+          (submit)="onTitleDefocus()"
+          name="name"
+        />
+        
+        <h2 class="text-md fw-bold mb-2">Session ID: {{ sessionId }}</h2>
         <div id="gonkDiv" class="border border-warning rounded p-3 card-wrapper">
           <!-- Gonk rows rendered here -->
           @for (character of characters; track character._id) {

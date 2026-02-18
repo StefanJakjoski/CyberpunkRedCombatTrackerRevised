@@ -16,8 +16,11 @@ import { CharacterCard } from "../../shared/character-card/character-card";
 export class TrackerSession {
   useBackgroundImage = true;
 
+  // session-info
+  sessionInfo: any = null;
   sessionId!: string;
   userId: string = '';
+  sessionName: string = '';
 
   characters: Character[] = [];
   turn: number = 0;
@@ -42,6 +45,7 @@ export class TrackerSession {
       next: (response) => {
         this.userId = response.data.id;
         this.getStartingCharacters();
+        this.getSessionInfo();
       },
       error: (err) => console.error(err)
     });
@@ -58,8 +62,26 @@ export class TrackerSession {
     });
   }
 
+  getSessionInfo(){
+    this.sessionService.getSessionById(this.sessionId).subscribe({
+      next: (response) => {
+        this.sessionName = response.name;
+        this.sessionInfo = response;
+        console.log(response);
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
   isTurn(character: Character): boolean {
     return this.characters.indexOf(character) === this.turn;
+  }
+
+  onTitleDefocus(){
+    console.log("defocus");
+    this.sessionInfo.name = this.sessionName;
+    console.log(`New name: ${this.sessionInfo.name}`);
+    this.sessionService.updateSession(this.sessionId, this.sessionInfo).subscribe();
   }
 
 
@@ -173,7 +195,15 @@ export class TrackerSession {
     if(character.name == null)
       character.name = '';
 
-    const newName = this.inputValues[character._id!] || character.name;
+    console.log(this.inputValues[character._id!]);
+
+    const newName: string | undefined = this.inputValues[character._id!].toString() || character.name;
+    character.name = newName;
+
+    console.log(newName);
+    
+    this.updateCharacterLocally(character);
+    this.updateCharacterInBackend(character);
   }
 
   changeArmor(character: Character) {

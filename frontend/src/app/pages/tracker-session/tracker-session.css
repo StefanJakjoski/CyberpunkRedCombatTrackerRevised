@@ -149,3 +149,11 @@
   background-color: white;
   color: black;
 }
+
+/* ------------------- Encounter Name ------------------- */
+.header-styling{
+  background-color: transparent;
+  width: fit-content !important;
+  outline: none;
+  border: none;
+}
