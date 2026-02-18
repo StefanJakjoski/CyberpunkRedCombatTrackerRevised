@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api'  // IMPLEMENT THIS LATER
+  apiUrl: 'https://cyberpunkredcombattrackerbackend.onrender.com/api'  // IMPLEMENT THIS LATER
 };
