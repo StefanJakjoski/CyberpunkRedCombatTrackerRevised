@@ -41,6 +41,7 @@
           }
         </div>
       </div>
+      <!-- END OF MAIN CONTENT -->
 
       <!-- SIDE PANEL -->
       <div class="col-lg-3">
@@ -52,7 +53,7 @@
           <div class="card bg-dark border-warning text-warning p-2">
             <div class="row g-0 mb-2">
               <button
-                class="btn btn-dark border-secondary"
+                class="btn btn-dark border-secondary unrounded"
                 id="passTurn"
                 (click)="nextTurn()"
               >
@@ -62,7 +63,7 @@
 
             <div class="row g-0 mb-2">
               <button
-                class="btn btn-dark border-secondary"
+                class="btn btn-dark border-secondary unrounded"
                 id="prevTurn"
                 (click)="previousTurn()"
               >
@@ -73,7 +74,7 @@
               <!-- Generate -->
             <div class="row g-0">
               <button
-                class="btn btn-dark border-warning"
+                class="btn btn-dark border-warning unrounded"
                 id="genEncounter" (click)="generateRandomGonk()"
               >
                 Generate Random Gonk
@@ -91,7 +92,7 @@
                 <div class="col-12">
                   <input
                     type="text"
-                    class="form-control form-control-sm bg-dark text-warning border-secondary"
+                    class="form-control form-control-sm bg-dark text-warning border-secondary unrounded"
                     placeholder="Name"
                     [(ngModel)]="newCharacterName"
                     name="name"
@@ -102,8 +103,8 @@
                   <label class="text-warning">Health</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark text-warning border-secondary"
-                    placeholder="HP"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    placeholder=""
                     [(ngModel)]="newCharacterHealth"
                     name="health"
                   />
@@ -113,8 +114,8 @@
                   <label class="text-warning">Armor</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark text-warning border-secondary"
-                    placeholder="AC"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    placeholder=""
                     [(ngModel)]="newCharacterArmor"
                     name="armor"
                   />
@@ -124,8 +125,8 @@
                   <label class="text-warning">Initiative</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark text-warning border-secondary"
-                    placeholder="Init"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    placeholder=""
                     [(ngModel)]="newCharacterInit"
                     name="init"
                   />
@@ -137,7 +138,7 @@
               </div>
 
               <button
-                class="btn btn-outline-warning btn-sm w-100"
+                class="btn btn-outline-warning btn-sm unrounded w-100"
                 (click)="generateGonk()"
               >
                 Add Gonk
@@ -150,6 +151,7 @@
         </div>
         </div>
       </div>
+      <!-- END OF SIDE PANEL -->
 
     </div>
   </div>

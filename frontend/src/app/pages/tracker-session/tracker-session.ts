@@ -191,18 +191,11 @@ export class TrackerSession {
   }
 
   changeName(character: Character) {
-    return;
-    if(character.name == null)
-      character.name = '';
+    console.log(character.name);
+    if(character.name === '')
+      character.name = 'Gonk';
 
-    console.log(this.inputValues[character._id!]);
-
-    const newName: string | undefined = this.inputValues[character._id!].toString() || character.name;
-    character.name = newName;
-
-    console.log(newName);
-    
-    this.updateCharacterLocally(character);
+    //this.updateCharacterLocally(character);
     this.updateCharacterInBackend(character);
   }
 
