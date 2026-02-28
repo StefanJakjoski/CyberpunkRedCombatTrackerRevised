@@ -9,21 +9,46 @@
 
       <!-- MAIN CONTENT -->
       <div class="col-lg-9">
-        <!-- <h2 class="display-4 fw-bold text-warning mb-3" style="font-family: Sdglitch;">{{ sessionName }}</h2> -->
-        <input
-          type="text"
-          class="display-4 fw-bold text-warning mb-3 header-styling" 
-          style="font-family: Sdglitch;"
-          placeholder=""
-          [(ngModel)]="sessionName"
-          (blur)="onTitleDefocus()"
-          (submit)="onTitleDefocus()"
-          name="name"
-        />
+        @if(loadingSessionName){
+          <div class="text-warning">
+            <div class="spinner-border" role="status">
+            </div>
+          </div>
+        }@else{
+          <input
+            type="text"
+            class="display-4 fw-bold text-warning mb-3 header-styling" 
+            style="font-family: Sdglitch;"
+            placeholder=""
+            [(ngModel)]="sessionName"
+            (blur)="onTitleDefocus()"
+            (submit)="onTitleDefocus()"
+            name="name"
+          />
+        }
+        
         
         <h2 class="text-md fw-bold mb-2">Session ID: {{ sessionId }}</h2>
         <div id="gonkDiv" class="border border-warning rounded p-3 card-wrapper">
           <!-- Gonk rows rendered here -->
+          @if(characters.length === 0 && !loadingCharacters){
+            <div class="text-center mt-3 mb-3">
+              <button
+                class="btn btn-dark border-warning unrounded"
+                id="genEncounter" (click)="generateRandomGonk()"
+              >
+                Generate First Gonk
+              </button>
+            </div>
+          }
+
+          @if(loadingCharacters){
+            <div class="text-center text-warning">
+              <div class="spinner-border" role="status">
+              </div>
+            </div>
+          }
+
           @for (character of characters; track character._id) {
           <app-character-card
               [character]="character"
@@ -87,6 +112,8 @@
             <div class="card-body p-2">
               <div class="row g-0 mb-2 text-warning fw-bold">Create new gonk</div>
 
+              
+
               <div class="row g-1 mb-2">
                 <label class="text-warning">Name</label>
                 <div class="col-12">
@@ -103,7 +130,7 @@
                   <label class="text-warning">Health</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
                     placeholder=""
                     [(ngModel)]="newCharacterHealth"
                     name="health"
@@ -114,7 +141,7 @@
                   <label class="text-warning">Armor</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
                     placeholder=""
                     [(ngModel)]="newCharacterArmor"
                     name="armor"
@@ -125,7 +152,7 @@
                   <label class="text-warning">Initiative</label>
                   <input
                     type="number"
-                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
                     placeholder=""
                     [(ngModel)]="newCharacterInit"
                     name="init"

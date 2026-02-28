@@ -103,3 +103,8 @@ label {
     transform: translateY(0);
   }
 }
+
+/* ------------------- Button Customization ------------------- */
+.unrounded {
+  border-radius: 0 !important;
+}

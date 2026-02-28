@@ -21,9 +21,11 @@ export class TrackerSession {
   sessionId!: string;
   userId: string = '';
   sessionName: string = '';
+  loadingSessionName: boolean = false;
 
   characters: Character[] = [];
   turn: number = 0;
+  loadingCharacters: boolean = false;
 
   // UI-only helper state (not persisted)
   activeCharacterId?: string;
@@ -40,6 +42,8 @@ export class TrackerSession {
   ) {}
 
   ngOnInit() {
+    this.loadingCharacters = true;
+    this.loadingSessionName = true;
     this.sessionId = this.route.snapshot.paramMap.get('sessionId')!;
     this.auth.getTokenVerification().subscribe({
       next: (response) => {
@@ -56,9 +60,13 @@ export class TrackerSession {
       next: (response) => {
         this.characters = response;
         this.sortCharacters();
-        this.cdr.detectChanges();
+        //this.cdr.detectChanges();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
+      complete: () => {
+        this.loadingCharacters = false;
+        this.cdr.detectChanges();
+      } 
     });
   }
 
@@ -69,7 +77,11 @@ export class TrackerSession {
         this.sessionInfo = response;
         console.log(response);
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
+      complete: () => {
+        this.loadingSessionName = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -100,11 +112,30 @@ export class TrackerSession {
   }
 
   generateRandomGonk(){
-    this.characterService.createCharacter({ sessionId: this.sessionId, ownerId: this.userId }).subscribe({
+    let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
+      initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor
+    };
+
+    if(!gonk.name || gonk.name === '')
+        gonk.name = 'Gonk';
+
+    if(gonk.health == null)
+        gonk.health = Math.floor(Math.random()*30 + 20);
+
+    if(gonk.armor == null)
+        gonk.armor = Math.floor(Math.random()*4 + 7);
+
+    if(gonk.initiative == null)
+        gonk.initiative = Math.floor(Math.random()*17 + 3);
+
+    this.characters.push(gonk);
+    this.sortCharacters();
+    this.cdr.detectChanges();
+
+    this.characterService.createCharacter(gonk).subscribe({
       next: (response) => {
-        this.characters.push(response);
-        this.sortCharacters();
-        this.cdr.detectChanges();
+        gonk._id = response._id;
+        console.log("Character successfully saved.");
       },
       error: (err) => console.error(err)
     });
@@ -115,11 +146,26 @@ export class TrackerSession {
       initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor
     };
 
+    if(!gonk.name || gonk.name === '')
+        gonk.name = 'Gonk';
+
+    if(gonk.health == null)
+        gonk.health = Math.floor(Math.random()*30 + 20);
+
+    if(gonk.armor == null)
+        gonk.armor = Math.floor(Math.random()*4 + 7);
+
+    if(gonk.initiative == null)
+        gonk.initiative = Math.floor(Math.random()*17 + 3);
+
+    this.characters.push(gonk);
+    this.sortCharacters();
+    this.cdr.detectChanges();
+
     this.characterService.createCharacter(gonk).subscribe({
       next: (response) => {
-        this.characters.push(response);
-        this.sortCharacters();
-        this.cdr.detectChanges();
+        gonk._id = response._id;
+        console.log("Character successfully saved.");
       },
       error: (err) => console.error(err)
     });
@@ -239,7 +285,9 @@ export class TrackerSession {
       this.turn = 0;
       this.cdr.detectChanges();
     }
-      
+
+
+    console.log(this.characters);  
   }
 
   // END OF ACTIONS
