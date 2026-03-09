@@ -54,6 +54,9 @@
               [character]="character"
               [isActive]="isTurn(character)"
               [(inputValue)]="inputValues[character._id!]"
+              [(isHeadshot)]="headshotChecks[character._id!]"
+              [(halfArmor)]="halfArmorChecks[character._id!]"
+              [(ignoreArmor)]="ignoreArmorChecks[character._id!]"
               (rangedAttack)="rangedAttack($event)"
               (meleeAttack)="meleeAttack($event)"
               (setHealth)="setHealth($event)"
@@ -76,9 +79,17 @@
 
           <!-- Turn Controls -->
           <div class="card bg-dark border-warning text-warning p-2">
-            <div class="row g-0 mb-2">
+            <div class="row p-0 m-0 mb-2">
               <button
-                class="btn btn-dark border-secondary unrounded"
+                class="btn btn-sm btn-dark border-secondary unrounded col-6"
+                id="prevTurn"
+                (click)="previousTurn()"
+              >
+                Previous Turn
+              </button>
+
+              <button
+                class="btn btn-sm btn-dark border-secondary unrounded col-6"
                 id="passTurn"
                 (click)="nextTurn()"
               >
@@ -86,20 +97,10 @@
               </button>
             </div>
 
-            <div class="row g-0 mb-2">
-              <button
-                class="btn btn-dark border-secondary unrounded"
-                id="prevTurn"
-                (click)="previousTurn()"
-              >
-                Previous Turn
-              </button>
-            </div>
-
               <!-- Generate -->
             <div class="row g-0">
               <button
-                class="btn btn-dark border-warning unrounded"
+                class="btn btn-sm btn-dark border-warning unrounded"
                 id="genEncounter" (click)="generateRandomGonk()"
               >
                 Generate Random Gonk
@@ -126,7 +127,7 @@
                   />
                 </div>
 
-                <div class="col-4">
+                <div class="col-6">
                   <label class="text-warning">Health</label>
                   <input
                     type="number"
@@ -137,18 +138,7 @@
                   />
                 </div>
 
-                <div class="col-4">
-                  <label class="text-warning">Armor</label>
-                  <input
-                    type="number"
-                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
-                    placeholder=""
-                    [(ngModel)]="newCharacterArmor"
-                    name="armor"
-                  />
-                </div>
-
-                <div class="col-4">
+                <div class="col-6">
                   <label class="text-warning">Initiative</label>
                   <input
                     type="number"
@@ -156,6 +146,28 @@
                     placeholder=""
                     [(ngModel)]="newCharacterInit"
                     name="init"
+                  />
+                </div>
+
+                <div class="col-6">
+                  <label class="text-warning small">Head Armor</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
+                    placeholder=""
+                    [(ngModel)]="newCharacterHeadArmor"
+                    name="headArmor"
+                  />
+                </div>
+
+                <div class="col-6">
+                  <label class="text-warning">Armor</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm bg-dark border-secondary number-to-text placeholder-light unrounded text-warning"
+                    placeholder=""
+                    [(ngModel)]="newCharacterArmor"
+                    name="armor"
                   />
                 </div>
 

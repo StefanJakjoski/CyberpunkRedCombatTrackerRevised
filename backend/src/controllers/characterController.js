@@ -18,7 +18,7 @@ export const createCharacter = async (req, res) => {
 export const getCharacters = async (req, res) => {
   try {
     const characters = req.user.role === "admin"
-      ? await Character.find().populate("sessionId")
+      ? await Character.find().populate("sessionId").populate("weapons")
       : await Character.find({
           $or: [
             { ownerId: req.user._id },
@@ -27,7 +27,7 @@ export const getCharacters = async (req, res) => {
                 { allowedUsers: req.user._id }
               ]})).map(s => s._id) } }
           ]
-        }).populate("sessionId");
+        }).populate("sessionId").populate("weapons");
 
     res.json(characters);
   } catch (err) {
@@ -56,7 +56,7 @@ export const getCharactersBySession = async (req, res) => {
     }
 
     // Fetch characters belonging to this session
-    const characters = await Character.find({ sessionId }).populate("sessionId");
+    const characters = await Character.find({ sessionId }).populate("sessionId").populate("weapons");
 
     res.json(characters);
   } catch (err) {
@@ -68,7 +68,7 @@ export const getCharactersBySession = async (req, res) => {
 // Get a single character by ID
 export const getCharacterById = async (req, res) => {
   try {
-    const character = await Character.findById(req.params.id).populate("sessionId");
+    const character = await Character.findById(req.params.id).populate("sessionId").populate("weapons");
     if (!character) return res.status(404).json({ message: "Character not found" });
     res.json(character);
   } catch (err) {

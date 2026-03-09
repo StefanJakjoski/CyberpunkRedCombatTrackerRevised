@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js'
 import sessionRoutes from './routes/sessionRoutes.js'
 import characterRoutes from './routes/characterRoutes.js'
 import authGuardRoutes from './routes/authGuardRoutes.js'
+import weaponRoutes from './routes/weaponRoutes.js'
 
 dotenv.config();
 connectDB();
@@ -20,7 +21,8 @@ app.get("/api/", (req, res) => res.send("API running"));
 app.use('/api/auth', authRoutes);
 app.use('/api/session', sessionRoutes);
 app.use('/api/character', characterRoutes);
-app.use('/api/auth-guard', authGuardRoutes)
+app.use('/api/auth-guard', authGuardRoutes);
+app.use('/api/weapon', weaponRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -4,9 +4,11 @@ import mongoose from "mongoose";
 const characterFormat = new mongoose.Schema({
     sessionId: { type: mongoose.Schema.Types.ObjectId, ref: "Session", required: true },
     ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    weapons: [{ type: mongoose.Schema.Types.ObjectId, ref: "Weapon" }],
     name: { type: String },
     health: {type: Number},
     armor: { type: Number },
+    headArmor: { type: Number },
     initiative: { type: Number },
 });
 
@@ -19,6 +21,9 @@ characterFormat.pre("save", function(){
 
     if(this.armor == null)
         this.armor = Math.floor(Math.random()*4 + 7);
+
+    if(this.headArmor == null)
+        this.headArmor = 0;
 
     if(this.initiative == null)
         this.initiative = Math.floor(Math.random()*17 + 3);

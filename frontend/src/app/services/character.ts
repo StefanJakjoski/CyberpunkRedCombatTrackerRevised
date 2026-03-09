@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from './auth';
 import { Observable } from 'rxjs';
+import { Weapon } from './weapon';
 
 export interface Character {
   _id?: string;
@@ -11,7 +12,9 @@ export interface Character {
   name?: string;
   health?: number;
   armor?: number;
+  headArmor?: number,
   initiative?: number;
+  weapons?: Weapon[];
 }
 
 @Injectable({

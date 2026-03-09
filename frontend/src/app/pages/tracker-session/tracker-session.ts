@@ -6,6 +6,7 @@ import { Character, CharacterService } from '../../services/character';
 import { Auth } from '../../services/auth';
 import { Session } from '../../services/session';
 import { CharacterCard } from "../../shared/character-card/character-card";
+import { Weapon, WeaponService, WeaponTypes } from '../../services/weapon';
 
 @Component({
   selector: 'app-tracker-session',
@@ -30,15 +31,31 @@ export class TrackerSession {
   // UI-only helper state (not persisted)
   activeCharacterId?: string;
   inputValues: Record<string, number> = {};
+  headshotChecks: Record<string, boolean> = {}
+  halfArmorChecks: Record<string, boolean> = {}
+  ignoreArmorChecks: Record<string, boolean> = {}
 
   // create gonk helper
   newCharacterName: string | undefined = '';
   newCharacterHealth: number | undefined = undefined;
   newCharacterInit: number | undefined = undefined;
   newCharacterArmor: number | undefined = undefined;
+  newCharacterHeadArmor: number | undefined = undefined;
+
+  // create weapon helper
+  newWeaponType: string | undefined = '';
+  newWeaponSkill: string | undefined = '';
+  newSingleShotDice: number | undefined = undefined;
+  newSingleShotDamage: number | undefined = undefined;
+  newMagazineSize: number | undefined = undefined;
+  newROF: number | undefined = undefined;
+  newConcealable: boolean | undefined = undefined;
+  newAmmunition: string | undefined = '';
+  newWeaponName: string | undefined = '';
+  newWeaponNotes: string | undefined = '';
 
   constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef, private characterService: CharacterService,
-    private auth: Auth, private sessionService: Session
+    private auth: Auth, private sessionService: Session, private weaponService: WeaponService
   ) {}
 
   ngOnInit() {
@@ -113,7 +130,8 @@ export class TrackerSession {
 
   generateRandomGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
-      initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor
+      initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
+      headArmor: this.newCharacterHeadArmor
     };
 
     if(!gonk.name || gonk.name === '')
@@ -124,6 +142,9 @@ export class TrackerSession {
 
     if(gonk.armor == null)
         gonk.armor = Math.floor(Math.random()*4 + 7);
+
+    if(gonk.headArmor == null)
+        gonk.headArmor = 0;
 
     if(gonk.initiative == null)
         gonk.initiative = Math.floor(Math.random()*17 + 3);
@@ -143,7 +164,8 @@ export class TrackerSession {
 
   generateGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
-      initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor
+      initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
+      headArmor: this.newCharacterHeadArmor
     };
 
     if(!gonk.name || gonk.name === '')
@@ -154,6 +176,9 @@ export class TrackerSession {
 
     if(gonk.armor == null)
         gonk.armor = Math.floor(Math.random()*4 + 7);
+
+    if(gonk.headArmor == null)
+        gonk.headArmor = 0;
 
     if(gonk.initiative == null)
         gonk.initiative = Math.floor(Math.random()*17 + 3);
@@ -169,6 +194,16 @@ export class TrackerSession {
       },
       error: (err) => console.error(err)
     });
+  }
+
+  generateWeapon(){
+    let weapon: Weapon = { 
+      weaponType: this.newWeaponType, weaponSkill: this.newWeaponSkill, 
+      weaponName: this.newWeaponName, weaponNotes: this.newWeaponNotes,
+      singleShotDice: this.newSingleShotDice, singleShotDamage: this.newSingleShotDamage,
+      magazineSize: this.newMagazineSize, rateOfFire: this.newROF,
+      concealable: this.newConcealable, ammunition: this.newAmmunition
+    }
   }
 
   // END OF LEFT SIDE CONTROLS
@@ -290,6 +325,22 @@ export class TrackerSession {
     console.log(this.characters);  
   }
 
+  saveWeapon(weapon: Weapon) {
+    console.log("Save weapon emit")
+    if(weapon.characterId == null || weapon.characterId == ''){
+      console.error("Invalid character ID");
+    }
+
+    this.weaponService.createWeapon(weapon).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
   // END OF ACTIONS
 
   private updateCharacterLocally(updated: Character) {
@@ -318,11 +369,37 @@ export class TrackerSession {
       return;
     }
 
-    this.characterService.deleteCharacter(character._id).subscribe({
+    this.weaponService.deleteAllWeaponsFromCharacterId(character._id).subscribe({
+      next: (response) => {
+
+        console.log(response);
+        this.characterService.deleteCharacter(character._id!).subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (err) => console.error(err)
+        });
+
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  private deleteWeaponsFromCharacterInBackend(character: Character){
+    if(character._id == null){
+      console.error("Delete failed: character id is null");
+      return;
+    }
+
+    this.weaponService.deleteAllWeaponsFromCharacterId(character._id).subscribe({
       next: (response) => {
         console.log(response);
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+      }
     });
   }
 
