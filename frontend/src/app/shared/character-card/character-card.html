@@ -23,12 +23,17 @@
   </div>
 
   <div class="col">
+    <p class="mb-0 bt-0">HP: {{ character.health ?? '—' }}</p>
+    <p class="mb-0 bt-0">HA: {{ character.headArmor ?? '—' }} BA: {{ character.armor ?? '—' }}</p>
+    <p class="mb-0 bt-0">IN: {{ character.initiative ?? '—' }}</p>
+    <!--
     <p class="mb-0">
       HP: {{ character.health ?? '—' }}<br>
       Head Armor: {{ character.headArmor ?? '—' }}<br>
       Body Armor: {{ character.armor ?? '—' }}<br>
       Initiative: {{ character.initiative ?? '—' }}
     </p>
+    -->
   </div>
 
   <!-- UNCOMMENT FOR WEAPON CASES
@@ -68,14 +73,14 @@
           <!-- Popover container -->
           <div 
             *ngIf="showDetails[weapon._id!]"
-            class="popover-custom border border-danger p-2 position-absolute bg-black"
+            class="popover-custom border border-danger p-2 position-absolute bg-black text-start"
             style="top: 100%; left: 0; z-index: 10; white-space: pre-line;"
           >
-            <label> Weapon Skill: {{ weapon.weaponSkill }} </label>
-            <label> Weapon Damage: {{ weapon.singleShotDice }}d{{ weapon.singleShotDamage }} </label>
-            <label> Magazine Size: {{ weapon.magazineSize }} </label>
-            <label> Weapon ROF: {{ weapon.rateOfFire }} </label>
-            <label> Concealable: {{ weapon.concealable }} </label>
+            <label> Skill: {{ weapon.weaponSkill }} </label><br/>
+            <label> Damage: {{ weapon.singleShotDice }}d{{ weapon.singleShotDamage }} </label><br/>
+            <label> Magazine Size: {{ weapon.magazineSize }} </label><br/>
+            <label> ROF: {{ weapon.rateOfFire }} </label><br/>
+            <label> Concealable: {{ weapon.concealable }} </label><br/>
             <button class="btn btn-sm btn-outline-danger flex-fill mb-1 unrounded" (click)="deleteWeapon(weapon)">Delete Weapon</button>
           </div>
         </div>
