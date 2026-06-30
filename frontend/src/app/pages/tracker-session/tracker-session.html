@@ -58,7 +58,6 @@
               [(halfArmor)]="halfArmorChecks[character._id!]"
               [(ignoreArmor)]="ignoreArmorChecks[character._id!]"
               (rangedAttack)="rangedAttack($event)"
-              (meleeAttack)="meleeAttack($event)"
               (setHealth)="setHealth($event)"
               (changeName)="changeName($event)"
               (changeArmor)="changeArmor($event)"
@@ -182,6 +181,25 @@
               >
                 Add Gonk
               </button>
+
+            </div>
+          </div>
+
+          <!-- SESSION LOGS -->
+          <div class="card bg-dark border-warning text-warning session-log-card">
+            <div class="card-body p-2 d-flex flex-column session-log-body">
+
+              <div class="fw-bold mb-2">Session Logs</div>
+
+              <div class="session-log-box" #logBox>
+                @for (log of logs; track $index) {
+                  <br>
+                  <br>
+                  <div class="log-entry">
+                    [{{ log.timestamp | date:'HH:mm:ss' }}] {{ log.message }}
+                  </div>
+                }
+              </div>
 
             </div>
           </div>

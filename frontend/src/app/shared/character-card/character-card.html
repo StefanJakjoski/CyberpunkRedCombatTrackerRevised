@@ -1,6 +1,6 @@
-<div class="row gonk-row align-items-center mb-2 mt-2 p-2 border border-warning rounded" [class.active-turn]="isActive">
+<div class="row gonk-row align-items-center mb-2 mt-2 p-1 border border-warning rounded" [class.active-turn]="isActive">
 
-  <div class="col-auto">
+  <div class="col-1">
     <img src="assets/samurai-icon.png" class="portrait" />
   </div>
 
@@ -13,7 +13,7 @@
   <div class="col-2">
     <input
       type="text"
-      class="fs-3 fw-bold text-warning input-transparent text-uppercase f-aldrich-regular"
+      class="fs-3 fw-bold text-warning input-transparent input-limited text-uppercase f-aldrich-regular"
       placeholder=""
       [(ngModel)]="character.name"
       (blur)="changeName.emit(character)"
@@ -22,18 +22,50 @@
     />
   </div>
 
-  <div class="col">
-    <p class="mb-0 bt-0">HP: {{ character.health ?? '—' }}</p>
-    <p class="mb-0 bt-0">HA: {{ character.headArmor ?? '—' }} BA: {{ character.armor ?? '—' }}</p>
-    <p class="mb-0 bt-0">IN: {{ character.initiative ?? '—' }}</p>
-    <!--
-    <p class="mb-0">
-      HP: {{ character.health ?? '—' }}<br>
-      Head Armor: {{ character.headArmor ?? '—' }}<br>
-      Body Armor: {{ character.armor ?? '—' }}<br>
-      Initiative: {{ character.initiative ?? '—' }}
+  <div class="col-2">
+    <p class="mb-0 bt-0">
+      HP:
+      <input
+        type="text"
+        class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
+        [(ngModel)]="character.health"
+        (focus)="storeCurrentStats('health')"
+        (blur)="saveStats('health')"
+        name="health"
+      />
     </p>
-    -->
+    <p class="mb-0 bt-0">
+      HA:
+      <input
+        type="text"
+        class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
+        [(ngModel)]="character.headArmor"
+        (focus)="storeCurrentStats('headArmor')"
+        (blur)="saveStats('headArmor')"
+        name="headArmor"
+      />
+
+      BA:
+      <input
+        type="text"
+        class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
+        [(ngModel)]="character.armor"
+        (focus)="storeCurrentStats('bodyArmor')"
+        (blur)="saveStats('bodyArmor')"
+        name="bodyArmor"
+      />
+    </p>
+    <p class="mb-0 bt-0">
+      IN:
+      <input
+        type="text"
+        class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
+        [(ngModel)]="character.initiative"
+        (focus)="storeCurrentStats('initiative')"
+        (blur)="saveStats('initiative')"
+        name="initiative"
+      />
+    </p>
   </div>
 
   <!-- UNCOMMENT FOR WEAPON CASES
@@ -200,11 +232,11 @@
   <div class="col-3">
     <!--<input type="number" class="form-control form-control-sm mb-2" [(ngModel)]="inputValue" placeholder="Value" /> -->
     <input
-      type="number"
-      class="form-control form-control-sm mb-2 text-light bg-dark number-to-text placeholder-light border-secondary unrounded"
+      type="text"
+      class="form-control form-control-sm mb-2 text-light bg-dark placeholder-light border-secondary unrounded"
       [ngModel]="inputValue"
       (ngModelChange)="onInputChange($event)"
-      placeholder="Enter value"
+      placeholder="Enter damage or dice (ex. 9, 3d6, 2d4+3)"
     />
 
     <div class="d-flex flex-wrap">
@@ -212,9 +244,12 @@
         <span class="text">Ranged Attack</span>
       </button>
 
+
+      <!--
       <button class="btn btn-sm btn-outline-danger flex-fill mb-1 unrounded col-6" (click)="meleeAttack.emit(character)">
         <span class="text">Melee Attack</span>
       </button>
+      
 
       <div class="w-100"></div>
 
@@ -229,6 +264,8 @@
       <button class="btn btn-sm btn-outline-warning flex-fill gap-1 unrounded col-4" (click)="changeInit.emit(character)">
         <span class="text">Set Initiative</span>
       </button>
+
+      -->
     </div>
 
     <div class="row px-3">

@@ -4,7 +4,7 @@
 ### high priority
  - localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)
  - add debuffs and crit tables
- - add random dice roller (bottom right corner, there for anything dice related)
+ - ~~add random dice roller (bottom right corner, there for anything dice related)~~
 
 ### medium priority
  - add separate icons (single menu that brings up different ones, maybe separate db for images if hosted)

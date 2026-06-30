@@ -16,7 +16,7 @@ export class CharacterCard{
 
   @Input() character!: Character;
   @Input() isActive = false;
-  @Input() inputValue?: number;
+  @Input() inputValue?: string;
   @Output() inputValueChange = new EventEmitter<number>();
   @Input() isHeadshot?: boolean;
   @Output() isHeadshotChange = new EventEmitter<boolean>();
@@ -33,6 +33,70 @@ export class CharacterCard{
   @Output() changeInit = new EventEmitter<Character>();
   @Output() delete = new EventEmitter<Character>();
   @Output() saveWeapon = new EventEmitter<Weapon>();
+
+  //edit stats
+  editHealth = '';
+  editBodyArmor = '';
+  editHeadArmor = '';
+  editInitiative = '';
+
+  private isPositiveInteger(val: string): boolean{
+    return /^[1-9]\d*$/.test(val);
+  }
+
+  storeCurrentStats(stat: string){
+    if(stat == 'health'){
+      this.editHealth = this.character.health?.toString() ?? ''; 
+      console.log(this.editHealth);
+    }else if(stat == 'bodyArmor'){
+      this.editBodyArmor = this.character.armor?.toString() ?? ''; 
+    }else if(stat == 'headArmor'){
+      this.editHeadArmor = this.character.headArmor?.toString() ?? ''; 
+    }else if(stat == 'initiative'){
+      this.editInitiative = this.character.initiative?.toString() ?? ''; 
+    }
+  }
+
+  saveStats(stat: string){
+    if(stat == "health"){
+      this.character.health = Number(this.character.health?.toString().trim());
+      if(!this.isPositiveInteger(this.character.health?.toString() ?? '')){
+        //console.log(`\"${this.character.health} and ${this.editHealth}\"`);
+        this.character.health = Number(this.editHealth);
+      }
+
+      this.setHealth.emit(this.character);
+    }else if(stat == "bodyArmor"){
+      this.character.armor = Number(this.character.armor?.toString().trim());
+      if(!this.isPositiveInteger(this.character.armor?.toString() ?? '')){
+        //console.log(`\"${this.character.health} and ${this.editHealth}\"`);
+        this.character.armor = Number(this.editBodyArmor);
+      }
+
+      this.changeArmor.emit(this.character);
+    }else if(stat == "headArmor"){
+      this.character.headArmor = Number(this.character.headArmor?.toString().trim());
+      if(!this.isPositiveInteger(this.character.headArmor?.toString() ?? '')){
+        //console.log(`\"${this.character.health} and ${this.editHealth}\"`);
+        this.character.headArmor = Number(this.editHeadArmor);
+      }
+
+      this.changeArmor.emit(this.character);
+    }else if(stat == "initiative"){
+      this.character.initiative = Number(this.character.initiative?.toString().trim());
+      if(!this.isPositiveInteger(this.character.initiative?.toString() ?? '')){
+        //console.log(`\"${this.character.health} and ${this.editHealth}\"`);
+        this.character.initiative = Number(this.editInitiative);
+      }
+
+      this.changeInit.emit(this.character);
+    }else {
+      this.editHealth = this.character.health?.toString() ?? '';
+      this.editBodyArmor = this.character.armor?.toString() ?? '';
+      this.editHeadArmor = this.character.headArmor?.toString() ?? '';
+      this.editInitiative = this.character.initiative?.toString() ?? '';
+    }
+  }
 
   // add weapon helper
   @ViewChild('addWeaponBtn') addWeaponBtn!: ElementRef;

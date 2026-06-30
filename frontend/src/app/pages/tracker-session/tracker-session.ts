@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Character, CharacterService } from '../../services/character';
@@ -7,6 +7,11 @@ import { Auth } from '../../services/auth';
 import { Session } from '../../services/session';
 import { CharacterCard } from "../../shared/character-card/character-card";
 import { Weapon, WeaponService, WeaponTypes } from '../../services/weapon';
+
+interface LogEntry {
+  message: string;
+  timestamp: number;
+}
 
 @Component({
   selector: 'app-tracker-session',
@@ -30,7 +35,7 @@ export class TrackerSession {
 
   // UI-only helper state (not persisted)
   activeCharacterId?: string;
-  inputValues: Record<string, number> = {};
+  inputValues: Record<string, string> = {};
   headshotChecks: Record<string, boolean> = {}
   halfArmorChecks: Record<string, boolean> = {}
   ignoreArmorChecks: Record<string, boolean> = {}
@@ -53,6 +58,15 @@ export class TrackerSession {
   newAmmunition: string | undefined = '';
   newWeaponName: string | undefined = '';
   newWeaponNotes: string | undefined = '';
+
+  // dice roll helper
+  lastDiceCommand: number[] = []; //0 - number, 1 - dice type
+  lastDiceOutputs: number[] = []; //[1, 4, 6]
+
+  // log helper
+  logs: LogEntry[] = [];
+  visibleLogs: string[] = [];
+  @ViewChild('logBox') logBox!: ElementRef;
 
   constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef, private characterService: CharacterService,
     private auth: Auth, private sessionService: Session, private weaponService: WeaponService
@@ -217,24 +231,62 @@ export class TrackerSession {
     if(character.armor == null)
       character.armor = 0;
 
-    let deathCheck = false;
-    const damage = this.inputValues[character._id!] || 0;
+    if(character.headArmor == null){
+      character.headArmor = 0;
+    }
 
-    var newDamage = Math.max(0, damage-character.armor!);
+    const isHeadshot = this.headshotChecks[character._id!] || false;
+    const halfArmor = this.halfArmorChecks[character._id!] || false;
+    const ignoreArmor = this.ignoreArmorChecks[character._id!] || false;
+
+    let logMsg = `NET.LOG // ATTACK :: TARGET: ${character.name?.toUpperCase()}`
+
+    let deathCheck = false;
+    let damageCheck = this.inputValues[character._id!] || '0';
+    let damage = 0;
+    
+    if(this.isDiceNotation(damageCheck)){
+      damage = this.rollDice(damageCheck);
+      console.log(`Damage ${damage}`);
+    }else if(this.isStrictlyNumeric(damageCheck)){
+      damage = Number(damageCheck);
+    }
+
+    let armor = isHeadshot ? character.headArmor : character.armor;
+    let effectiveArmor = armor;
+    effectiveArmor = halfArmor ? Math.ceil(effectiveArmor / 2) : effectiveArmor;
+    effectiveArmor = ignoreArmor ? 0 : effectiveArmor;
+
+    var newDamage = Math.max(0, damage-effectiveArmor);
+    newDamage = isHeadshot ? newDamage*2 : newDamage;
+
     character.health -= newDamage;
-    if(newDamage > 0)
-        character.armor > 0 ? character.armor -= 1 : character.armor = 0;
+    if(newDamage > 0){
+      armor > 0 ? armor -= 1 : armor = 0;
+      logMsg += ` // ARMOR :: PENETRATED // DMG: ${newDamage}`;
+
+      if(isHeadshot){
+        character.headArmor = armor;
+      }else{
+        character.armor = armor;
+      }
+    }
 
     if(character.health! <= 0)
-        deathCheck = true;
+      deathCheck = true;
 
-    if(deathCheck)
+    if(deathCheck){
       character.health = 0;
+      logMsg += ` // SYSTEM :: ${character.name?.toUpperCase()} FLATLINED`;
+    }
+
+    this.addLog(logMsg);
 
     this.updateCharacterLocally(character);
     this.updateCharacterInBackend(character);
   }
 
+  /*
   meleeAttack(character: Character) {
     if(character.health == null)
       return;
@@ -259,13 +311,14 @@ export class TrackerSession {
     this.updateCharacterLocally(character);
     this.updateCharacterInBackend(character);
   }
+  */
 
   setHealth(character: Character) {
     if(character.health == null)
       character.health = 0;
 
-    const value = this.inputValues[character._id!] || character.health;
-    character.health = Math.max(value, 0);
+    //const value = this.inputValues[character._id!] || character.health;
+    character.health = Math.max(character.health, 0);
     
     this.updateCharacterLocally(character);
     this.updateCharacterInBackend(character);
@@ -284,8 +337,9 @@ export class TrackerSession {
     if(character.armor == null)
       character.armor = 0;
 
-    const value = this.inputValues[character._id!] || character.armor;
-    character.armor = Math.max(value, 0);
+    //const value = this.inputValues[character._id!] || character.armor;
+    character.armor = Math.max(character.armor, 0);
+    character.headArmor = Math.max(character.headArmor ?? 0, 0);
 
     this.updateCharacterLocally(character);
     this.updateCharacterInBackend(character);
@@ -295,8 +349,8 @@ export class TrackerSession {
     if(character.initiative == null)
       character.initiative = 0;
 
-    const value = this.inputValues[character._id!] || character.initiative;
-    character.initiative = Math.max(value, 0);
+    //const value = this.inputValues[character._id!] || character.initiative;
+    character.initiative = Math.max(character.initiative, 0);
 
     this.sortCharacters();
     this.updateCharacterLocally(character);
@@ -418,5 +472,55 @@ export class TrackerSession {
     const newTurn = this.characters.indexOf(currentActiveCharacter);
     if(newTurn !== -1)
       this.turn = newTurn;
+  }
+
+  private isStrictlyNumeric(input: string): boolean {
+    return /^\d+$/.test(input);
+  }
+
+  private isDiceNotation(input: string): boolean {
+    return /^\d+d\d+(\+\d+)?$/.test(input);
+  }
+
+  private rollDice(input: string): number {
+    const match = input.match(/^(\d+)d(\d+)(\+(\d+))?$/);
+
+    if(!match)
+      throw new Error(`Invalid dice notation: ${input}`);
+
+    const count = Number(match[1]);
+    const sides = Number(match[2]);
+    const bonus = match[4] ? Number(match[4]) : 0;
+
+    this.lastDiceCommand = [count, sides];
+
+    if (count > 100 || sides > 1000) 
+      throw new Error("Dice too large");
+
+    let total = 0;
+
+    this.lastDiceOutputs = [];
+    for (let i = 0; i < count; i++) {
+      let roll = Math.floor(Math.random() * sides) + 1;
+      total += roll;
+      this.lastDiceOutputs.push(roll);
+    }
+
+    this.addLog(`// ROLLED ${count}d${sides} // ${this.lastDiceOutputs}`);
+    return total + bonus;
+  }
+
+  addLog(message: string) {
+    this.logs.push({
+      message,
+      timestamp: Date.now()
+    });
+
+    setTimeout(() => {
+      if (this.logBox) {
+        const el = this.logBox.nativeElement;
+        el.scrollTop = el.scrollHeight;
+      }
+    });
   }
 }

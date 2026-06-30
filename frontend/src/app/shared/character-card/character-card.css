@@ -160,6 +160,13 @@
   border: none;
 }
 
+.input-limited {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 input.number-to-text::-webkit-outer-spin-button,
 input.number-to-text::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -190,4 +197,17 @@ input.placeholder-light::placeholder {
 .checkbox-warning:checked {
   background-color: #ffc107;
   border-color: #ffc107;
+}
+
+
+.stat-input {
+    width: 3ch;
+    min-width: 3ch;
+    text-align: center;
+}
+
+.stat-input:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid var(--bs-warning);
 }
