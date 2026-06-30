@@ -1,0 +1,41 @@
+<div class="position-relative d-inline-block">
+
+  <!-- Current portrait -->
+  <img
+    [src]="'assets/' + selectedPortrait"
+    class="portrait"
+    (click)="toggle()"
+  />
+
+  @if (showSelector) {
+
+    <div
+      class="card bg-black border-warning shadow position-absolute mt-2 p-2"
+      style="width: 220px; z-index: 2000;"
+    >
+
+      <div class="row g-2">
+
+        @for (icon of portraits; track icon) {
+
+          <div class="col-4 text-center">
+
+            <img
+              [src]="'assets/' + icon"
+              class="img-fluid border rounded portrait-option"
+              [class.border-warning]="icon === selectedPortrait"
+              [class.border-secondary]="icon !== selectedPortrait"
+              (click)="selectPortrait(icon)"
+            />
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

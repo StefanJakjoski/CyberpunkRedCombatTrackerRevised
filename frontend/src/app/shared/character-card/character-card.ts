@@ -3,10 +3,12 @@ import { Character } from '../../services/character';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Weapon, WeaponTypes, WeaponSkills, WeaponService } from '../../services/weapon';
+import { PortraitSelector } from '../portrait-selector/portrait-selector';
+import { ToggleIcon } from '../toggle-icon/toggle-icon';
 
 @Component({
   selector: 'app-character-card',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PortraitSelector, ToggleIcon],
   templateUrl: './character-card.html',
   styleUrl: './character-card.css',
 })
@@ -117,15 +119,20 @@ export class CharacterCard{
   }
 
   onIsHeadshotChange(value: boolean) {
+    this.isHeadshot = value;
     this.isHeadshotChange.emit(value);
   }
 
   onHalfArmorChange(value: boolean) {
+    this.halfArmor = value;
     this.halfArmorChange.emit(value);
+    console.log(this.halfArmor);
   }
 
   onIgnoreArmorChange(value: boolean) {
+    this.ignoreArmor = value;
     this.ignoreArmorChange.emit(value);
+    console.log(this.ignoreArmor);
   }
 
   toggleAddWeapon() {
@@ -231,6 +238,14 @@ export class CharacterCard{
 
   trackWeapon(weapon: Weapon) {
     return weapon._id;
+  }
+
+  //PORTRAITS
+  onPortraitChanged(icon: string) {
+    this.character.portrait = icon;
+
+    //Persist to backend if needed
+    //this.changeCharacter.emit(this.character);
   }
 
 

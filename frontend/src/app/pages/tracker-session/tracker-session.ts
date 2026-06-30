@@ -62,6 +62,7 @@ export class TrackerSession {
   // dice roll helper
   lastDiceCommand: number[] = []; //0 - number, 1 - dice type
   lastDiceOutputs: number[] = []; //[1, 4, 6]
+  lastDiceNumberOfSixes: number = 0;
 
   // log helper
   logs: LogEntry[] = [];
@@ -145,7 +146,7 @@ export class TrackerSession {
   generateRandomGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
       initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
-      headArmor: this.newCharacterHeadArmor
+      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png'
     };
 
     if(!gonk.name || gonk.name === '')
@@ -182,7 +183,7 @@ export class TrackerSession {
   generateGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
       initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
-      headArmor: this.newCharacterHeadArmor
+      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png'
     };
 
     if(!gonk.name || gonk.name === '')
@@ -250,12 +251,23 @@ export class TrackerSession {
     let deathCheck = false;
     let damageCheck = this.inputValues[character._id!] || '0';
     let damage = 0;
+
+    let isCrit = false;
+    let isTarotCrit = false; 
     
     if(this.isDiceNotation(damageCheck)){
       damage = this.rollDice(damageCheck);
-      console.log(`Damage ${damage}`);
+      
+      isCrit = this.lastDiceNumberOfSixes >= 2 ? true : false
+      isTarotCrit = this.lastDiceNumberOfSixes >= 3 ? true : false
     }else if(this.isStrictlyNumeric(damageCheck)){
       damage = Number(damageCheck);
+    }
+
+    if(isTarotCrit){
+      logMsg += ` // WARNING :: TAROT CRIT`
+    }else if(isCrit){
+      logMsg += ` // WARNING :: CRIT`
     }
 
     let armor = isHeadshot ? character.headArmor : character.armor;
@@ -431,20 +443,20 @@ export class TrackerSession {
 
     this.weaponService.deleteAllWeaponsFromCharacterId(character._id).subscribe({
       next: (response) => {
-
         console.log(response);
-        this.characterService.deleteCharacter(character._id!).subscribe({
-          next: (response) => {
-            console.log(response);
-          },
-          error: (err) => console.error(err)
-        });
-
       },
       error: (err) => {
         console.error(err);
       }
     });
+
+    this.characterService.deleteCharacter(character._id!).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (err) => console.error(err)
+    });
+
   }
 
   private deleteWeaponsFromCharacterInBackend(character: Character){
@@ -506,10 +518,15 @@ export class TrackerSession {
     let total = 0;
 
     this.lastDiceOutputs = [];
+    this.lastDiceNumberOfSixes = 0;
     for (let i = 0; i < count; i++) {
       let roll = Math.floor(Math.random() * sides) + 1;
       total += roll;
+
       this.lastDiceOutputs.push(roll);
+
+      if(roll === 6)
+        this.lastDiceNumberOfSixes += 1;
     }
 
     this.addLog(`// ROLLED ${count}d${sides} // ${this.lastDiceOutputs}`);

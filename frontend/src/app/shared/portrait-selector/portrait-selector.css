@@ -1,0 +1,18 @@
+.portrait {
+  margin-left: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.portrait-option {
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    object-fit: cover;
+    transition: transform .15s ease;
+}
+
+.portrait-option:hover {
+    transform: scale(1.08);
+}

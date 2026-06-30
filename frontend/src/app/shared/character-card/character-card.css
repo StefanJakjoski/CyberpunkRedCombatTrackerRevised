@@ -211,3 +211,21 @@ input.placeholder-light::placeholder {
     box-shadow: none;
     border-bottom: 1px solid var(--bs-warning);
 }
+
+/* ------------------- Icon Customization ------------------- */
+.stat-icon{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+}
+
+.toggle-icon{
+    width:42px;
+    height:42px;
+    cursor:pointer;
+    transition:transform .15s ease;
+}
+
+.toggle-icon:hover{
+    transform:scale(1.1);
+}

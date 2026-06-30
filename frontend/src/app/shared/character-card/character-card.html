@@ -1,7 +1,15 @@
 <div class="row gonk-row align-items-center mb-2 mt-2 p-1 border border-warning rounded" [class.active-turn]="isActive">
 
+  <!--
   <div class="col-1">
     <img src="assets/samurai-icon.png" class="portrait" />
+  </div>
+  -->
+  <div class="col-1">
+    <app-portrait-selector
+      [selectedPortrait]="character.portrait"
+      (selectedPortraitChange)="onPortraitChanged($event)">
+    </app-portrait-selector>
   </div>
 
   <!--
@@ -22,9 +30,14 @@
     />
   </div>
 
-  <div class="col-2">
+  <div class="col-2 ">
     <p class="mb-0 bt-0">
-      HP:
+      <img
+        src="assets/icons/Icon_HP.png"
+        class="stat-icon"
+        alt="Health"
+        title="Health"
+      >
       <input
         type="text"
         class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
@@ -35,7 +48,13 @@
       />
     </p>
     <p class="mb-0 bt-0">
-      HA:
+      <img
+        src="assets/icons/Icon_HA.png"
+        class="stat-icon"
+        alt="Head Armor"
+        title="Head Armor"
+      >
+
       <input
         type="text"
         class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
@@ -45,7 +64,14 @@
         name="headArmor"
       />
 
-      BA:
+      &nbsp;
+      
+      <img
+        src="assets/icons/Icon_BA.png"
+        class="stat-icon"
+        alt="Body Armor"
+        title="Body Armor"
+      >
       <input
         type="text"
         class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
@@ -56,7 +82,12 @@
       />
     </p>
     <p class="mb-0 bt-0">
-      IN:
+      <img
+        src="assets/icons/Icon_INI.png"
+        class="stat-icon"
+        alt="Initiative"
+        title="Initiative"
+      >
       <input
         type="text"
         class="form-control form-control-sm d-inline-block bg-transparent text-light border-0 p-0 ms-1 stat-input"
@@ -231,17 +262,20 @@
 
   <div class="col-3">
     <!--<input type="number" class="form-control form-control-sm mb-2" [(ngModel)]="inputValue" placeholder="Value" /> -->
-    <input
-      type="text"
-      class="form-control form-control-sm mb-2 text-light bg-dark placeholder-light border-secondary unrounded"
-      [ngModel]="inputValue"
-      (ngModelChange)="onInputChange($event)"
-      placeholder="Enter damage or dice (ex. 9, 3d6, 2d4+3)"
-    />
+    <div class="mt-1">
+      <input
+        type="text"
+        class="form-control form-control-sm mb-1 text-light bg-dark placeholder-light border-secondary unrounded"
+        [ngModel]="inputValue"
+        (ngModelChange)="onInputChange($event)"
+        placeholder="Enter damage or dice (ex. 9, 3d6, 2d4+3)"
+        
+      />
+    </div>
 
-    <div class="d-flex flex-wrap">
-      <button class="btn btn-sm btn-outline-danger flex-fill mb-1 unrounded col-6" (click)="rangedAttack.emit(character)">
-        <span class="text">Ranged Attack</span>
+    <div class="d-flex flex-wrap mb-1">
+      <button class="btn btn-sm btn-outline-danger flex-fill unrounded col-6" (click)="rangedAttack.emit(character)">
+        <span class="text">Apply Damage</span>
       </button>
 
 
@@ -269,7 +303,15 @@
     </div>
 
     <div class="row px-3">
-      <div class="form-check mt-1 col-4">
+      <div class="form-check col-4">
+        <app-toggle-icon
+          [value]="isHeadshot ?? false"
+          onIcon="assets/icons/Icon_HS_active.png"
+          offIcon="assets/icons/Icon_HS_inactive.png"
+          tooltip="Headshot"
+          (valueChange)="onIsHeadshotChange($event)">
+        </app-toggle-icon>
+        <!--
         <input
           class="form-check-input unrounded checkbox-warning"
           type="checkbox"
@@ -280,9 +322,18 @@
         <label class="form-check-label small text-light" for="isHeadshot">
           Headshot
         </label>
+        -->
       </div>
 
-      <div class="form-check mt-1 col-4">
+      <div class="form-check col-4">
+        <app-toggle-icon
+          [value]="halfArmor ?? false"
+          onIcon="assets/icons/Icon_HalfArmor_active.png"
+          offIcon="assets/icons/Icon_HalfArmor_inactive.png"
+          tooltip="Half Armor"
+          (valueChange)="onHalfArmorChange($event)">
+        </app-toggle-icon>
+        <!--
         <input
           class="form-check-input unrounded checkbox-warning"
           type="checkbox"
@@ -293,9 +344,18 @@
         <label class="form-check-label small text-light" for="halfArmor">
           Half Armor
         </label>
+        -->
       </div>
 
-      <div class="form-check mt-1 col-4">
+      <div class="form-check col-4">
+        <app-toggle-icon
+          [value]="ignoreArmor ?? false"
+          onIcon="assets/icons/Icon_NoArmor_active.png"
+          offIcon="assets/icons/Icon_NoArmor_inactive.png"
+          tooltip="Ignore Armor"
+          (valueChange)="onIgnoreArmorChange($event)">
+        </app-toggle-icon>
+        <!--
         <input
           class="form-check-input unrounded checkbox-warning"
           type="checkbox"
@@ -306,6 +366,7 @@
         <label class="form-check-label small text-light" for="ignoreArmor">
           Ignore Armor
         </label>
+        -->
       </div>
     </div>
 

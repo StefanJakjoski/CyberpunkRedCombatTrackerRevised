@@ -1,0 +1,16 @@
+.toggle-icon{
+    cursor:pointer;
+    object-fit:contain;
+    transition:
+        transform .15s ease,
+        filter .15s ease;
+}
+
+.toggle-icon:hover{
+    transform:scale(1.1);
+    filter:brightness(1.15);
+}
+
+.toggle-icon:active{
+    transform:scale(.95);
+}

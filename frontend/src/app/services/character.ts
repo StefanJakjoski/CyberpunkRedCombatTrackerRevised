@@ -15,6 +15,7 @@ export interface Character {
   headArmor?: number,
   initiative?: number;
   weapons?: Weapon[];
+  portrait: string;
 }
 
 @Injectable({
