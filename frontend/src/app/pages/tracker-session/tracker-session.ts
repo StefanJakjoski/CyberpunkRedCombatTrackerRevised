@@ -174,6 +174,9 @@ export class TrackerSession {
       },
       error: (err) => console.error(err)
     });
+
+    let logMsg = `NET.ALERT // ASSAILANT ${gonk.name.toUpperCase()} DETECTED`
+    this.addLog(logMsg);
   }
 
   generateGonk(){
@@ -208,6 +211,9 @@ export class TrackerSession {
       },
       error: (err) => console.error(err)
     });
+
+    let logMsg = `NET.ALERT // ASSAILANT ${gonk.name.toUpperCase()} DETECTED`
+    this.addLog(logMsg);
   }
 
   generateWeapon(){
