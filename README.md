@@ -51,7 +51,7 @@ sudo docker compose up --build
 ## Collaborators and credit
 
 Thanks to Tadej Hristov for designing all icons used.
-All background images have been pulled directly from public domain image hosting services.
+For information on the background images, please read the legal disclaimer.
 
 ## Legal Disclaimer
 
