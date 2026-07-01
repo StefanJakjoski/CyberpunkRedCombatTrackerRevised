@@ -9,11 +9,9 @@ A full-stack web application for tracking combat/game data, built with:
 
 This project is fully containerized and requires **only Docker** to run.
 
----
-
 # Quick Start
 
-## 1. Prerequisites
+## Prerequisites
 
 Make sure you have:
 
@@ -36,20 +34,19 @@ docker compose version
 git clone https://github.com/StefanJakjoski/CyberpunkRedCombatTrackerRevised.git
 cd CyberpunkRedCombatTrackerRevised
 ```
-OR manually through the website.
+  OR manually through the website.
 
 - Start everything
 ```bash
 sudo docker compose up --build
 ```
 
-OR run either *start.sh* (on Linux/Mac) or *start.bat* (on Windows) with administrator privileges.
+  OR run either *start.sh* (on Linux/Mac) or *start.bat* (on Windows) with administrator privileges.
 
 - Open in browser at http://localhost:4200
 
 - Account creation 
-This part is a carryover from the online hosting portion of the program. It has no authentication so feel
-free to invent emails and usernames on a whim. It doesn't check :)
+  This part is a carryover from the online hosting portion of the program. It has no authentication so feel free to invent emails and usernames on a whim. It doesn't check :)
 
 # To-Do
 ### high priority
