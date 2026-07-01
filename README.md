@@ -2,7 +2,7 @@
 
 ## todo
 ### high priority
- - localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)
+ - ~~localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)~~
  - add debuffs and crit tables
  - ~~add random dice roller (bottom right corner, there for anything dice related)~~
 
