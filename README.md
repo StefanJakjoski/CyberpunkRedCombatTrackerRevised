@@ -1,6 +1,57 @@
 # CyberpunkRedCombatTrackerRevised
 
-## todo
+A full-stack web application for tracking combat/game data, built with:
+
+- Frontend: Angular
+- Backend: Node.js + Express
+- Database: MongoDB
+- Deployment: Docker + Docker Compose
+
+This project is fully containerized and requires **only Docker** to run.
+
+---
+
+# Quick Start
+
+## 1. Prerequisites
+
+Make sure you have:
+
+- Docker Desktop installed  
+  https://www.docker.com/products/docker-desktop/
+
+- Docker Compose (included with Docker Desktop v2+)
+
+Verify installation:
+
+```bash
+docker --version
+docker compose version
+```
+
+## Run the app
+
+- Clone this repository
+```bash
+git clone https://github.com/StefanJakjoski/CyberpunkRedCombatTrackerRevised.git
+cd CyberpunkRedCombatTrackerRevised
+```
+OR manually through the website.
+
+- Start everything
+```bash
+sudo docker compose up --build
+```
+
+OR run either *start.sh* (on Linux/Mac) or *start.bat* (on Windows) with administrator privileges.
+
+- Open in browser at http://localhost:4200
+
+- Account creation 
+This part is a carryover from the online hosting portion of the program. It has no authentication so feel
+free to invent emails and usernames on a whim. It doesn't check :)
+
+# To-Do
 ### high priority
  - ~~localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)~~
  - add debuffs and crit tables
