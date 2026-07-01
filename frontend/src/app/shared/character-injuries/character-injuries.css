@@ -1,0 +1,35 @@
+.effect-icon {
+    width:22px;
+    height:22px;
+    transition:.15s;
+}
+
+.effect-icon:hover {
+    transform:scale(1.15);
+}
+
+.effects-popup {
+    width:420px;
+    z-index:1050;
+}
+
+.popup-up {
+    bottom:40%;
+    top:auto;
+}
+
+.injury-option {
+    height:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:4px;
+}
+
+.unrounded {
+  border-radius: 0 !important;
+}
+
+input.placeholder-light::placeholder {
+  color: rgba(255,255,255, 0.5);
+}

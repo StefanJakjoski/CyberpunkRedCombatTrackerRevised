@@ -10,6 +10,7 @@ const characterFormat = new mongoose.Schema({
     armor: { type: Number },
     headArmor: { type: Number },
     initiative: { type: Number },
+    injuries: [{ type: String }],
 });
 
 characterFormat.pre("save", function(){

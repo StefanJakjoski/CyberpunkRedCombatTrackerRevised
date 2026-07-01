@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { Weapon, WeaponTypes, WeaponSkills, WeaponService } from '../../services/weapon';
 import { PortraitSelector } from '../portrait-selector/portrait-selector';
 import { ToggleIcon } from '../toggle-icon/toggle-icon';
+import { CharacterInjuries } from '../character-injuries/character-injuries';
 
 @Component({
   selector: 'app-character-card',
-  imports: [CommonModule, FormsModule, PortraitSelector, ToggleIcon],
+  imports: [CommonModule, FormsModule, PortraitSelector, ToggleIcon, CharacterInjuries],
   templateUrl: './character-card.html',
   styleUrl: './character-card.css',
 })
@@ -33,6 +34,7 @@ export class CharacterCard{
   @Output() changeName = new EventEmitter<Character>();
   @Output() changeArmor = new EventEmitter<Character>();
   @Output() changeInit = new EventEmitter<Character>();
+  @Output() changeInjuries = new EventEmitter<Character>();
   @Output() delete = new EventEmitter<Character>();
   @Output() saveWeapon = new EventEmitter<Weapon>();
 

@@ -51,6 +51,7 @@ sudo docker compose up --build
 ## Collaborators and credit
 
 Thanks to Tadej Hristov for designing all icons used.
+Status/Injury icons taken from Reddit user evr- from a post made on the official r/cyberpunkred subreddit.
 For information on the background images, please read the legal disclaimer.
 
 ## Legal Disclaimer
@@ -61,12 +62,13 @@ Absolutely none of the background images are public domain (whoops) and they wil
 ## To-Do
 ### high priority
  - ~~localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)~~
- - add debuffs and crit tables
+ - ~~add debuffs and crit tables~~
  - ~~add random dice roller (bottom right corner, there for anything dice related)~~
 
 ### medium priority
  - ~~add separate icons (single menu that brings up different ones, maybe separate db for images if hosted)~~
  - include separate icons when available
+ - include non-injury statuses (grappled, broken weapon, unconscious, drugged, on fire, etc...)
  - ~~change underlay to outline for turn order~~
  - separate players and and mooks (color coded outlines or whatever)
  - Add import option for predefined mooks (players included)

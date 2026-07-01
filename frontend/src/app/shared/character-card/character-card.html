@@ -21,13 +21,18 @@
   <div class="col-2">
     <input
       type="text"
-      class="fs-3 fw-bold text-warning input-transparent input-limited text-uppercase f-aldrich-regular"
+      class="fs-3 fw-bold text-warning input-transparent input-limited text-uppercase f-aldrich-regular my-1"
       placeholder=""
       [(ngModel)]="character.name"
       (blur)="changeName.emit(character)"
       (submit)="changeName.emit(character)"
       name="name"
     />
+
+    <app-character-injuries
+        [character]="character"
+        (changeInjuries)="changeInjuries.emit($event)">
+    </app-character-injuries>
   </div>
 
   <div class="col-2 ">

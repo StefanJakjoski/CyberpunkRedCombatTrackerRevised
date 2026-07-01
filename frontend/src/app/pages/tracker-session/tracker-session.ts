@@ -146,7 +146,7 @@ export class TrackerSession {
   generateRandomGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
       initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
-      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png'
+      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png', injuries: []
     };
 
     if(!gonk.name || gonk.name === '')
@@ -183,7 +183,7 @@ export class TrackerSession {
   generateGonk(){
     let gonk: Character = { sessionId: this.sessionId, ownerId: this.userId, name: this.newCharacterName,
       initiative: this.newCharacterInit, health: this.newCharacterHealth, armor: this.newCharacterArmor,
-      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png'
+      headArmor: this.newCharacterHeadArmor, portrait: 'samurai-icon.png', injuries: []
     };
 
     if(!gonk.name || gonk.name === '')
@@ -372,6 +372,13 @@ export class TrackerSession {
 
     this.sortCharacters();
     this.updateCharacterLocally(character);
+    this.updateCharacterInBackend(character);
+  }
+
+  changeInjuries(character: Character){
+    let logMsg = `SYS.ALERT // ${character.name} SUSTAINED CRIT :: ${character.injuries[character.injuries.length-1]}`;
+    this.addLog(logMsg);
+    
     this.updateCharacterInBackend(character);
   }
 

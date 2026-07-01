@@ -1,0 +1,123 @@
+<div class="effects-container">
+
+<div class="d-flex align-items-center mt-1">
+    <small class="text-warning me-2">Injuries</small>
+
+    <div class="d-flex flex-wrap align-items-center gap-1">
+
+        @for(id of character.injuries; track id){
+            @if(getInjury(id); as injury){
+                <button class="btn btn-sm p-0 border-0 bg-transparent unrounded" (click)="openDetails(injury)">
+                    <img class="effect-icon" [src]="'assets/injuries/' + injury.icon + '.png'" [title]="injury.name">
+                </button>
+            }
+        }
+
+        <button #addButton class="btn btn-sm btn-outline-warning unrounded py-0 px-2" (click)="toggleAddMenu(); $event.stopPropagation()">+</button>
+
+    </div>
+</div>
+
+
+@if(addMenuOpen){
+
+<div
+    #menu
+    class="effects-popup position-absolute bg-black border border-warning unrounded shadow p-2 text-light"
+    [class.popup-up]="menuAbove"
+    (click)="$event.stopPropagation()">
+
+    <input
+        class="form-control form-control-sm mb-1 text-light bg-dark placeholder-light border-secondary unrounded"
+        placeholder="Search injuries..."
+        [(ngModel)]="searchTerm"    
+    >
+
+    <div class="row g-2">
+
+        <div class="col-6">
+            <h6 class="text-warning mb-2">Head</h6>
+
+            <div class="row g-1">
+
+                @for(injury of filteredHeadInjuries; track injury.id){
+
+                <div class="col-4">
+                    <button
+                        class="btn btn-sm btn-outline-danger w-100 unrounded injury-option"
+                        [title]="injury.name"
+                        (click)="addInjury(injury)">
+
+                        <img class="effect-icon" [src]="'assets/injuries/' + injury.icon + '.png'">
+
+                    </button>
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+
+        <div class="col-6">
+            <h6 class="text-warning mb-2">Body</h6>
+
+            <div class="row g-1">
+
+                @for(injury of filteredBodyInjuries; track injury.id){
+
+                <div class="col-4">
+                    <button
+                        class="btn btn-sm btn-outline-danger w-100 unrounded injury-option"
+                        [title]="injury.name"
+                        (click)="addInjury(injury)">
+
+                        <img class="effect-icon" [src]="'assets/injuries/' + injury.icon + '.png'">
+
+                    </button>
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+}
+
+
+@if(selectedInjury){
+
+<div class="effects-popup position-absolute bg-black border border-danger unrounded shadow p-3 text-light"
+(click)="$event.stopPropagation()">
+
+    <h5 class="text-warning">{{selectedInjury.name}}</h5>
+
+    <hr class="my-2">
+
+    <p class="small mb-2">{{selectedInjury.description}}</p>
+
+    <div><strong>Location:</strong> {{selectedInjury.location}}</div>
+    <div><strong>Quick Fix:</strong> {{selectedInjury.quickFix}}</div>
+    <div><strong>Treatment:</strong> {{selectedInjury.treatment}}</div>
+
+    <div class="d-flex gap-2 mt-3">
+
+        <button class="btn btn-sm btn-outline-danger flex-fill unrounded" (click)="removeInjury()">
+            Remove
+        </button>
+
+        <button class="btn btn-sm btn-outline-secondary flex-fill unrounded" (click)="closeDetails()">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+}
+
+</div>
