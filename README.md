@@ -9,9 +9,9 @@ A full-stack web application for tracking combat/game data, built with:
 
 This project is fully containerized and requires **only Docker** to run.
 
-# Quick Start
+## Quick Start
 
-## Prerequisites
+### Prerequisites
 
 Make sure you have:
 
@@ -27,7 +27,7 @@ docker --version
 docker compose version
 ```
 
-## Run the app
+### Run the app
 
 - Clone this repository
 ```bash
@@ -48,7 +48,17 @@ sudo docker compose up --build
 - Account creation 
   This part is a carryover from the online hosting portion of the program. It has no authentication so feel free to invent emails and usernames on a whim. It doesn't check :)
 
-# To-Do
+## Collaborators and credit
+
+Thanks to Tadej Hristov for designing all icons used.
+All background images have been pulled directly from public domain image hosting services.
+
+## Legal Disclaimer
+
+I have (close to) no idea how up-to-snuff this is with the R. Talsorian public license. Forward any such complaints to my email.
+The tracker is based off and uses mechanics from Cyberpunk Red as published by R. Talsorian Games. The Samurai band logo is used in the tracker (currently as a placeholder).
+Absolutely none of the background images are public domain (whoops) and they will all be replaced shortly. I thank any relevant parties for their patience.
+## To-Do
 ### high priority
  - ~~localized version (likely separate branch, hosting and backend setup through docker, local db which can be downloaded, no login)~~
  - add debuffs and crit tables
