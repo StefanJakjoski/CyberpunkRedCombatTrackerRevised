@@ -41,12 +41,15 @@ cd CyberpunkRedCombatTrackerRevised
 sudo docker compose up --build
 ```
 
-  OR run either *start.sh* (on Linux/Mac) or *start.bat* (on Windows) with administrator privileges.
+  OR run either *start.sh* (on Linux/Mac) or *start.bat* (on Windows) with administrator privileges.  
+  start.sh supports the following arguments:  
+  -l (or --logfile)	  All logs are stored in a tracker.log file within the same directory  
+  -n (or --nologs)	  Application does not submit logs
 
 - Open in browser at http://localhost:4200
 
-- Account creation 
-  This part is a carryover from the online hosting portion of the program. It has no authentication so feel free to invent emails and usernames on a whim. It doesn't check :)
+- Account creation  
+This part is a carryover from the online hosting portion of the program. It has no authentication so feel free to invent emails and usernames on a whim. It doesn't check :)
 
 ## Collaborators and credit
 
